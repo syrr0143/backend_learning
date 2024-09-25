@@ -123,14 +123,110 @@ pending - when the status of the promise is pendig then the value is undefined
 
 // lets implement the promise rather than using the callback
 
-function fetchdata() {
+// function fetchdata() {
+//     return new Promise((resolve, reject) => {
+//         console.log('step 1: starting download');
+//         setTimeout(() => {
+//             let data = "step 2: downloaded song from website ";
+//             console.log(" step 3 : download comleted ");
+//             resolve(data); // when success return data 
+//         }, 3000);
+//     })
+// }
+// this was all about the promises creation
+// now lets see how the promises consumption works
+
+const fs = require("fs");
+const { resolve } = require("path");
+// function fetchData(url) {
+//     return new Promise((resolve, reject) => {
+//         console.log("starting download , inside fetchdata");
+//         setTimeout(() => {
+//             console.log("download completed");
+//             let data = `mere dholna sun mere pyar kidhun , mere dholna sun mere pyar ki dhun ,
+//             tere dhadkano ki sarghosi mere khwahisho me sajti hain/n from ${url}`;
+//             resolve("hello yeah")
+//         }, 2000);
+//     })
+// }
+
+// function processSong(data) {
+//     return new Promise((resolve, reject) => {
+//         console.log("Processing the song ");
+//         setTimeout(() => {
+//             console.log("song processed success");
+//             resolve(data);
+//         }, 2000);
+//     })
+// }
+
+// function saveSong(data) {
+//     return new Promise((resolve, reject) => {
+//        setTimeout(() => {
+//          console.log("saving in the file ");
+//         let filename = "output.txt"
+//          fs.writeFile(filename, data, (err) => {
+//                 if (err) {
+//                     reject(err); // Handle any error that occurs during file writing
+//                 } else {
+//                     resolve(filename);
+//                 }
+//             });
+//         }, 3000);
+//     })
+// }
+
+// Using promise chaining
+// fetchData("www.google.com")
+//     .then(processSong)
+//     .then(saveSong)
+//     .then((filename) => {
+//         console.log("Operation success, file saved as:", filename);
+//     })
+//     .catch((err) => {
+//         console.log(err)
+//     })
+
+    /*
+    NOTE::::====>>>>>
+    you cannot have more than one of resolve , reject or both of them 
+
+    resolve("hello")
+    resolve("hello")
+
+    in the above case the promise id fulfilled with the hello one not hello2 
+
+    resolve("hello1");
+    reject("error");
+
+    in this case only resolve wiil be sent as fulfilled promise
+    */
+// const fs = require("fs");
+
+function fetchData(url) {
     return new Promise((resolve, reject) => {
-        console.log('step 1: starting download');
+        console.log("Starting download, inside fetchData");
         setTimeout(() => {
-            let data = "step 2: downloaded song from website ";
-            console.log(" step 3 : download comleted ");
-            resolve(data); // when success return data 
-        }, 3000);
-    })
+            console.log("Download completed");
+            let data = `mere dholna sun mere pyar ki dhun, mere dholna sun mere pyar ki dhun, 
+            tere dhadkano ki sargoshi mere khwahisho me sajti hain from ${url}`;
+            resolve(data); // Resolve with actual song data
+        }, 2000);
+    });
 }
 
+
+// Using promise chaining
+fetchData("www.google.com")
+    .then((value) => {
+        console.log("Processing the song");
+        setTimeout(() => {
+            console.log("Song processed successfully");
+            resolve(value); // Resolve with the processed data
+        }, 2000);
+    })
+    .then((value) => {
+        console.log('in last  promise');
+        resolve('process completed')
+    })
+    
