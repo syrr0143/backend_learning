@@ -42,3 +42,61 @@ flightsAndSearch
     ├── repository
     ├── seeders
     ├── services
+    └── utils
+```
+
+> lets see what does config have 
+
+```json
+{
+  "development": {
+    "username": "root",
+    "password": null,
+    "database": "database_development",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }, 
+//   the above part of the json file database name and the other user details 
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
+```
+
+after runnig the above command now we will run 
+```npm
+npx sequelize db:create
+```
+
+this command will look in the config file and create the database we have defined here 
+
+```sql
+SHOW DATABASES;
+```
+This command will show the availble databse.
+
+> Creating the table in database using the sequelize
+
+```bash
+# step1 - generating migration 
+npx sequelize migration:generate --name create-city
+# step2 - Define the migration i.e. define any changes to be done in the migration file in migration folder
+# step3 - run the migration
+npx sequelize db:migrate
+
+# after all these steps we can see the table denfined in the database we just created
+
+```
+
+
